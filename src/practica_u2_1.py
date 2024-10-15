@@ -13,6 +13,20 @@ def comprobar_importe(valor: str) -> bool:
     Returns:
         bool: True si el valor es un número válido (positivo, negativo o con punto decimal), False en caso contrario.
     """
+    valor = float((input("Introduce el importe: ")))
+
+    while valor.isdigit:
+        if valor == (valor < 0) or (valor.startswith("-")) or (valor.isdecimal):
+            return True
+        else:
+            return False
+    
+    
+
+    
+    
+
+    
 
 
 def comprobar_comando(comando: str) -> bool:
@@ -25,13 +39,22 @@ def comprobar_comando(comando: str) -> bool:
     Returns:
         bool: True si el comando está en la lista de comandos válidos, False en caso contrario.
     """
+    
+    comando = input("Escribe la opción que desee: compra, venta, saldo, reset, fin: ")
 
-
+    if comando != "compra" or "venta" or "saldo" or "reset" or "fin":
+        return False
+    
+    else:
+        comando == "compra" or "venta" or "saldo" or "reset" or "fin"
+        return True
+    
 def mostrar_mensaje_error():
     """
+    
     Muestra el mensaje de error por entrada inválida.
     """
-
+    print ("*ERROR* Entrada inválida")
 
 def procesar_compra(saldo: float, importe: float) -> float:
     """
@@ -44,7 +67,11 @@ def procesar_compra(saldo: float, importe: float) -> float:
     Returns:
         float: El saldo actualizado después de realizar la compra.
     """
-
+    art1 = float(input("Introduce el precio del artículo 1: "))
+    art2 = float(input("Introduce el precio del artículo 2: "))
+    importe = art1 + art2
+    saldo_restante = float((saldo - importe))
+    return saldo_restante
 
 def procesar_venta(saldo: float, importe: float) -> float:
     """
@@ -57,6 +84,11 @@ def procesar_venta(saldo: float, importe: float) -> float:
     Returns:
         float: El saldo actualizado después de realizar la venta.
     """
+    art1 = float(input("Introduce el precio del artículo 1: "))
+    art2 = float(input("Introduce el precio del artículo 2: "))
+    importe = art1 + art2
+    saldo_restante = float((saldo + importe))
+    return saldo_restante
 
 
 def mostrar_saldo(saldo: float, cont_compras: int, cont_ventas: int):
@@ -68,7 +100,7 @@ def mostrar_saldo(saldo: float, cont_compras: int, cont_ventas: int):
         cont_compras (int): Número total de compras realizadas.
         cont_ventas (int): Número total de ventas realizadas.
     """
-
+    print(f"Este es el saldo actual{saldo}, el número de compras {cont_compras} y el número de ventas {cont_ventas} realizadas")
 
 def resetear_saldo(saldo: float, cont_compras: int, cont_ventas: int) -> tuple[float, int, int]:
     """
@@ -82,6 +114,7 @@ def resetear_saldo(saldo: float, cont_compras: int, cont_ventas: int) -> tuple[f
     Returns:
         tuple[float, int, int]: El nuevo saldo (0), número de compras (0) y número de ventas (0) después del reinicio.
     """
+    saldo = (cont_compras - cont_ventas)   
 
 
 def recuperar_comando_e_importe(linea: str) -> tuple[str, str]:
@@ -112,6 +145,12 @@ def recuperar_comando_e_importe(linea: str) -> tuple[str, str]:
         return lista_palabras[0], lista_palabras[1]
     else:
         return None, None
+
+def encuentra_fin(comando):
+
+    if comando == "fin":
+        return None
+
 
 
 def main():
@@ -152,29 +191,30 @@ def main():
     cont_compras = 0
     cont_ventas = 0
     saldo = 0
+    
 
     while not encuentra_fin:
 
-        comando, importe = recuperar_comando_e_importe(linea)
+        comando, importe = recuperar_comando_e_importe()
 
         if comando is None or not comprobar_comando(comando):
             mostrar_mensaje_error()
         elif comando in ("saldo", "reset", "fin") and importe is not None:
-            
+            comprobar_comando()
         elif comando == "saldo":
-            
+            mostrar_saldo()
         elif comando == "reset":
-            
+            resetear_saldo()
         elif comando == "fin":
-            
+            encuentra_fin()
         elif importe is None or not comprobar_importe(importe):
-            
+            mostrar_mensaje_error()
         else:
 
             if comando == "compra":
-
+                procesar_compra()
             elif comando == "venta":
-
+                procesar_venta()
 
             
 if __name__ == "__main__":
